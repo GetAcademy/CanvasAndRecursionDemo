@@ -25,20 +25,20 @@
         ctx.strokeStyle = 'blue';
         // ctx.lineWidth = 10;
 
-        drawFractal(100, 400, 400, 100, 700, 400, 1);
+        drawFractal(400, 100, 100, 400, 700, 400, 1);
 
-        function drawFractal(x1, y1, x2, y2, x3, y3, levels) {
-            drawTriangle(x1, y1, x2, y2, x3, y3);
-            if (levels == 1) {
-                let xLeft = middle(x1, x2);
-                let yLeft = middle(y1, y2);
-                let xBottom = middle(x1, x3);
-                let yBottom = middle(y1, y3);
-                let xRight = middle(x3, x2);
-                let yRight = middle(y3, y2);
-                // drawFractal(xLeft, yLeft, x2, y2, xBottom, yBottom);
-                // drawFractal(xBottom, yBottom, x3, y3, xRight, yRight);
-                drawFractal(x1, y1, xLeft, yLeft, xRight, yRight);
+        function drawFractal(xTop, yTop, xDownLeft, yDownLeft, xDownRight, yDownRight, levels) {
+            drawTriangle(xTop, yTop, xDownLeft, yDownLeft, xDownRight, yDownRight);
+            if (levels < 7) {
+                let xLeft = middle(xTop, xDownLeft);
+                let yLeft = middle(yTop, yDownLeft);
+                let xBottom = middle(xDownLeft, xDownRight);
+                let yBottom = middle(yDownLeft, yDownRight);
+                let xRight = middle(xDownRight, xTop);
+                let yRight = middle(yDownRight, yTop);
+                drawFractal(xLeft, yLeft, xDownLeft, yDownLeft, xBottom, yBottom, levels + 1);
+                drawFractal(xBottom, yBottom, xDownRight, yDownRight, xRight, yRight, levels + 1);
+                drawFractal(xTop, yTop, xLeft, yLeft, xRight, yRight, levels + 1);
             }
         }
 
