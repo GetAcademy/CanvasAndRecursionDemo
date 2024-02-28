@@ -21,22 +21,27 @@
 <body>
     <canvas id="myCanvas">
     </canvas>
-    <button onclick="move()">+</button>
-    <button onclick="doAnimate()">start</button>
     <script>
         // model
-        let x1 = 100;
-        let y1 = 200;
-        let x2 = 700;
-        let y2 = 300;
+        let angle = Math.PI / 2;
+        let lineLength = 200;
+        let centerX = 300;
+        let centerY = 300;
+        let phase = 1;
 
         // view
         var canvas = document.getElementById("myCanvas");
         canvas.width = 1000;
         canvas.height = 800;
         var ctx = canvas.getContext("2d");
-        updateView();
+
+        doAnimate();
         function updateView() {
+            let x1 = Math.cos(angle) * lineLength + centerX;
+            let y1 = Math.sin(angle) * lineLength + centerY;
+            let x2 = (2 * centerX - x1);
+            let y2 = (2 * centerY - y1);
+
             ctx.clearRect(0, 0, 1000, 800);
             ctx.beginPath();
             ctx.strokeStyle = 'blue';
@@ -47,12 +52,14 @@
         }
 
         // controller
-        function move() {
-            x1 += 50;
-            updateView();
-        }
         function doAnimate() {
-            x1++;
+            angle = angle + 0.01;
+            lineLength += phase;
+            if (phase == 1 && lineLength == 300
+                || phase == -1 && lineLength == 0
+            ) {
+                phase = -phase;
+            }
             updateView();
             requestAnimationFrame(doAnimate);
         }

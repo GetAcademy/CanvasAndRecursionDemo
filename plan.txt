@@ -1,6 +1,6 @@
 1: Tegne i canvas
 2: MVC!
-3: Enkle animasjoner
+3: Enkle animasjoner, spinne en linje i en sirkel?
 4: Ev. kort om rekursjon
    - fakultet
    - hangman

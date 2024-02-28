@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        canvas {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas">
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = 1000;
+        canvas.height = 800;
+        var ctx = canvas.getContext("2d");
+        ctx.strokeStyle = 'blue';
+        // ctx.lineWidth = 10;
+
+        drawFractal(100, 400, 400, 100, 700, 400, 1);
+
+        function drawFractal(x1, y1, x2, y2, x3, y3, levels) {
+            drawTriangle(x1, y1, x2, y2, x3, y3);
+            if (levels == 1) {
+                let xLeft = middle(x1, x2);
+                let yLeft = middle(y1, y2);
+                let xBottom = middle(x1, x3);
+                let yBottom = middle(y1, y3);
+                let xRight = middle(x3, x2);
+                let yRight = middle(y3, y2);
+                // drawFractal(xLeft, yLeft, x2, y2, xBottom, yBottom);
+                // drawFractal(xBottom, yBottom, x3, y3, xRight, yRight);
+                drawFractal(x1, y1, xLeft, yLeft, xRight, yRight);
+            }
+        }
+
+        function middle(a, b) {
+            return (a + b) / 2;
+        }
+
+        function drawTriangle(x1, y1, x2, y2, x3, y3) {
+            drawLine(x1, y1, x2, y2);
+            drawLine(x1, y1, x3, y3);
+            drawLine(x2, y2, x3, y3);
+        }
+
+        function drawLine(x1, y1, x2, y2) {
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+    </script>
+</body>
+
+</html>
